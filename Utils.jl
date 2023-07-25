@@ -62,7 +62,7 @@ function readCSF(filename)
     catch # Obtain these from ICP datetime & parse later on when it is loaded
         recording_start_time = [DateTime(2013)]
         recording_end_time = [DateTime(2013)]   # Pre-allocate so the type matches
-    end
+    endŃ
 
     # Begin handling data in XML string - some files do not have infusion test output
     xml_obj = fid["aux/ICM+/icmtests"]
@@ -150,6 +150,8 @@ function readCSF(filename)
     Data["P_b"] = results["ICP_baseline"]
     Data["T"] = [0:numsamples-1...] * 1 / 6
 
+    Data["baseline_start_frame"] = round(Int, (selections["Baseline"][1] - start_time).value / 10000)
+    Data["baseline_end_frame"] = round(Int, (selections["Baseline"][2] - start_time).value / 10000)
     Data["infusion_start_frame"] = round(Int, (selections["Infusion"][1] - start_time).value / 10000)
     Data["infusion_end_frame"] = round(Int, (selections["Infusion"][2] - start_time).value / 10000)
     Data["transition_start_frame"] = round(Int, (selections["Transition"][1] - start_time).value / 10000)
